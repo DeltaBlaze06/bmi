@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kalkulator BMI</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      max-width: 400px;
+      width: 100%;
+      animation: slideUp 0.8s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.5rem;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #74ebd5;
+      outline: none;
+    }
+
+    button {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #74ebd5;
+      color: white;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #4ecdc4;
+    }
+
+    .result {
+      margin-top: 1.5rem;
+      text-align: center;
+      font-size: 1.2rem;
+      color: #222;
+      animation: popIn 0.5s ease-in-out;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Kalkulator BMI</h2>
+    <label for="berat">Berat Badan (kg):</label>
+    <input type="number" id="berat" placeholder="Contoh: 70">
+
+    <label for="tinggi">Tinggi Badan (cm):</label>
+    <input type="number" id="tinggi" placeholder="Contoh: 170">
+
+    <button onclick="hitungBMI()">Hitung BMI</button>
+
+    <div id="hasil" class="result"></div>
+  </div>
+
+  <script>
+    function hitungBMI() {
+      const berat = parseFloat(document.getElementById("berat").value);
+      const tinggi = parseFloat(document.getElementById("tinggi").value) / 100;
+
+      if (isNaN(berat) || isNaN(tinggi) || berat <= 0 || tinggi <= 0) {
+        document.getElementById("hasil").innerHTML = "Mohon masukkan angka yang valid!";
+        return;
+      }
+
+      const bmi = (berat / (tinggi * tinggi)).toFixed(2);
+      let kategori = "";
+
+      if (bmi < 18.5) {
+        kategori = "Kekurangan berat badan";
+      } else if (bmi < 24.9) {
+        kategori = "Normal (ideal)";
+      } else if (bmi < 29.9) {
+        kategori = "Kelebihan berat badan";
+      } else {
+        kategori = "Obesitas";
+      }
+
+      document.getElementById("hasil").innerHTML = `BMI Anda: <strong>${bmi}</strong><br>${kategori}`;
+    }
+  </script>
+</body>
+</html>
